@@ -8,5 +8,6 @@ namespace Blog.Module.ArticleManagement.Contract
         GetArticleResponseModel GetArticle(GetArticleRequestModel requestModel);
         void AddArticle(AddArticleRequestModel requestModel);
         void UpdateArticle(UpdateArticleRequestModel requestModel);
+        void DeleteArticle(int id);
     }
 }

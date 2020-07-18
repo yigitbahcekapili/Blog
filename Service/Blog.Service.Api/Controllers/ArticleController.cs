@@ -35,5 +35,11 @@ namespace Blog.Service.Api.Controllers
             _articleContrat.UpdateArticle(request);
         }
 
+        [HttpDelete("DeleteArticle")]
+        public void DeleteArticle([FromBody]int id)
+        {
+            _articleContrat.DeleteArticle(id);
+        }
+
     }
 }

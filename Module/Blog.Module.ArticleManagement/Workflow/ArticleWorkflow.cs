@@ -4,9 +4,6 @@ using Blog.Infrastructure.Data.Entities;
 using Blog.Module.ArticleManagement.Contract;
 using Blog.Module.ArticleManagement.RequestModel.Article;
 using Blog.Module.ArticleManagement.ResponseModel.Article;
-using Blog.Module.ArticleManagement.Validator.Article;
-using FluentValidation.Results;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Blog.Module.ArticleManagement.Workflow
@@ -27,7 +24,7 @@ namespace Blog.Module.ArticleManagement.Workflow
 
         public GetArticleResponseModel GetArticle(GetArticleRequestModel requestModel)
         {
-            Article article = GetArticleValidation(requestModel);
+            Article article = GetArticleById(requestModel.ArticleId);
 
             var response = new GetArticleResponseModel()
             {
@@ -39,9 +36,9 @@ namespace Blog.Module.ArticleManagement.Workflow
             return response;
         }
 
-        private Article GetArticleValidation(GetArticleRequestModel requestModel)
+        private Article GetArticleById(int articleId)
         {
-            Article article = _articleRepository.GetById(requestModel.ArticleId);
+            Article article = _articleRepository.GetById(articleId);
 
             if (article == null)
                 throw new System.Exception("Makale bulunamadı..");
@@ -66,21 +63,20 @@ namespace Blog.Module.ArticleManagement.Workflow
 
         public void UpdateArticle(UpdateArticleRequestModel requestModel)
         {
-            Article article = UpdateArticleValidation(requestModel);
+            Article article = GetArticleById(requestModel.ArticleId);
 
             article = _mapper.Map(requestModel, article);
 
             _articleRepository.Update(article);
         }
 
-        private Article UpdateArticleValidation(UpdateArticleRequestModel requestModel)
+        #endregion
+
+        #region Delete
+
+        public void DeleteArticle(int id)
         {
-            Article article = _articleRepository.GetById(requestModel.ArticleId);
-
-            if (article == null)
-                throw new System.Exception("Güncellenecek makale bulunamadı..");
-
-            return article;
+            _articleRepository.Delete(id);
         }
 
         #endregion

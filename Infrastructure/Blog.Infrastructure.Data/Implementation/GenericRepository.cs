@@ -50,11 +50,11 @@ namespace Blog.Infrastructure.Data.Implementation
         /// <param name="id">Primary key</param>
         public void Delete(int id)
         {
-            var obj = DbContext.Set<T>().Find(id);
+            T entity = DbContext.Set<T>().Find(id);
 
-            obj.IsActive = false;
+            entity.IsActive = false;
 
-            DbContext.Update(obj);
+            Update(entity);
         }
 
         public void Update(T entity)
