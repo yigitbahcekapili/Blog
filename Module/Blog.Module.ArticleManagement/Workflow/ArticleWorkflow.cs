@@ -4,7 +4,7 @@ using Blog.Infrastructure.Data.Entities;
 using Blog.Module.ArticleManagement.Contract;
 using Blog.Module.ArticleManagement.RequestModel.Article;
 using Blog.Module.ArticleManagement.ResponseModel.Article;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace Blog.Module.ArticleManagement.Workflow
 {
@@ -34,6 +34,11 @@ namespace Blog.Module.ArticleManagement.Workflow
             };
 
             return response;
+        }
+
+        public ICollection<Article> GetAllArticle()
+        {
+            return _articleRepository.GetList();
         }
 
         private Article GetArticleById(int articleId)

@@ -3,12 +3,11 @@ using Blog.Module.ArticleManagement.Contract;
 using Blog.Module.ArticleManagement.RequestModel.Article;
 using Blog.Module.ArticleManagement.ResponseModel.Article;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace Blog.Service.Api.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ArticleController : ControllerBase
+    public class ArticleController : Controller
     {
         private readonly IArticleContract _articleContrat;
 
@@ -17,25 +16,31 @@ namespace Blog.Service.Api.Controllers
             _articleContrat = articleContract;
         }
 
-        [HttpGet("GetArticle")]
+        [HttpGet]
         public GetArticleResponseModel GetArticle([FromBody]GetArticleRequestModel request)
         {
             return _articleContrat.GetArticle(request);
         }
 
-        [HttpPost("AddArticle")]
+        [HttpGet]
+        public ICollection<Article> GetAllArticle()
+        {
+            return _articleContrat.GetAllArticle();
+        }
+
+        [HttpPost]
         public void AddArticle([FromBody]AddArticleRequestModel request)
         {
             _articleContrat.AddArticle(request);
         }
 
-        [HttpPut("UpdateArticle")]
+        [HttpPut]
         public void UpdateArticle([FromBody]UpdateArticleRequestModel request)
         {
             _articleContrat.UpdateArticle(request);
         }
 
-        [HttpDelete("DeleteArticle")]
+        [HttpDelete]
         public void DeleteArticle([FromBody]int id)
         {
             _articleContrat.DeleteArticle(id);

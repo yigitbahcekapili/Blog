@@ -12,11 +12,6 @@ namespace Blog.Infrastructure.Data.Implementation
     {
         protected BlogDbContext DbContext { get; set; }
 
-        public List<T> GetAll()
-        {
-            return DbContext.Set<T>().ToList();
-        }
-
         /// <summary>
         /// Get entity by primary key
         /// </summary>
@@ -27,6 +22,16 @@ namespace Blog.Infrastructure.Data.Implementation
             return DbContext.Set<T>().Find(id);
         }
 
+        public ICollection<T> GetList()
+        {
+            return DbContext.Set<T>().ToList();
+        }
+
+        public ICollection<T> GetList(Expression<Func<T, bool>> filter)
+        {
+            return DbContext.Set<T>().Where(filter).ToList();
+        }
+
         public void Add(T entity)
         {
             DbContext.Set<T>().Add(entity);
@@ -34,14 +39,11 @@ namespace Blog.Infrastructure.Data.Implementation
             DbContext.SaveChanges();
         }
 
-        public ICollection<T> GetList()
+        public void Update(T entity)
         {
-            throw new NotImplementedException();
-        }
+            DbContext.Set<T>().Update(entity);
 
-        public ICollection<T> GetList(Expression<Func<T, bool>> filter)
-        {
-            return DbContext.Set<T>().Where(filter).ToList();
+            DbContext.SaveChanges();
         }
 
         /// <summary>
@@ -56,14 +58,6 @@ namespace Blog.Infrastructure.Data.Implementation
 
             Update(entity);
         }
-
-        public void Update(T entity)
-        {
-            DbContext.Set<T>().Update(entity);
-
-            DbContext.SaveChanges();
-        }
-
 
     }
 }
