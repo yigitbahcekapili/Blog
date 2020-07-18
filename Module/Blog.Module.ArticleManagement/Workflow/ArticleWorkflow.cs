@@ -4,6 +4,7 @@ using Blog.Infrastructure.Data.Entities;
 using Blog.Module.ArticleManagement.Contract;
 using Blog.Module.ArticleManagement.RequestModel.Article;
 using Blog.Module.ArticleManagement.ResponseModel.Article;
+using System;
 using System.Collections.Generic;
 
 namespace Blog.Module.ArticleManagement.Workflow
@@ -12,7 +13,7 @@ namespace Blog.Module.ArticleManagement.Workflow
     {
         private readonly IMapper _mapper;
         private readonly IArticleRepository _articleRepository;
-
+        
         public ArticleWorkflow(IArticleRepository articleRepository,
                                IMapper mapper)
         {
@@ -46,7 +47,7 @@ namespace Blog.Module.ArticleManagement.Workflow
             Article article = _articleRepository.GetById(articleId);
 
             if (article == null)
-                throw new System.Exception("Makale bulunamadı..");
+                throw new Exception("Makale bulunamadı..");
 
             return article;
         }

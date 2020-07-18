@@ -1,6 +1,5 @@
 ﻿using Blog.Infrastructure.Data.Contract;
 using Blog.Infrastructure.Data.Entities;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +11,6 @@ namespace Blog.Infrastructure.Data.Implementation
     {
         protected BlogDbContext DbContext { get; set; }
 
-        /// <summary>
-        /// Get entity by primary key
-        /// </summary>
-        /// <param name="id">Primary key</param>
-        /// <returns></returns>
         public T GetById(int id)
         {
             return DbContext.Set<T>().Find(id);
@@ -46,10 +40,6 @@ namespace Blog.Infrastructure.Data.Implementation
             DbContext.SaveChanges();
         }
 
-        /// <summary>
-        /// Set 'IsActive' of the object false
-        /// </summary>
-        /// <param name="id">Primary key</param>
         public void Delete(int id)
         {
             T entity = DbContext.Set<T>().Find(id);

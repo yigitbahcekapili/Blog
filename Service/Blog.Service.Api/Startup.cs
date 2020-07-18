@@ -6,11 +6,14 @@ using Blog.Module.ArticleManagement.AutoMapper;
 using FluentValidation.AspNetCore;
 using FluentValidation.Attributes;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 
 namespace Blog.Service.Api
 {
@@ -25,9 +28,8 @@ namespace Blog.Service.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
-                .AddFluentValidation(opt => opt.ValidatorFactoryType = typeof(AttributedValidatorFactory))
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().AddFluentValidation(opt => opt.ValidatorFactoryType = typeof(AttributedValidatorFactory))
+              .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             #region Database Connection
 
@@ -79,12 +81,24 @@ namespace Blog.Service.Api
             });
 
             app.UseHttpsRedirection();
+
+            app.UseExceptionHandler(a => a.Run(async context =>
+            {
+                var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+                var exception = exceptionHandlerPathFeature.Error;
+
+                var result = JsonConvert.SerializeObject(new { Error = exception.Message });
+                context.Response.ContentType = "application/json";
+                await context.Response.WriteAsync(result);
+            }));
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "api/{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

@@ -7,7 +7,9 @@ using System.Collections.Generic;
 
 namespace Blog.Service.Api.Controllers
 {
-    public class ArticleController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ArticleController : ControllerBase
     {
         private readonly IArticleContract _articleContrat;
 
@@ -16,31 +18,31 @@ namespace Blog.Service.Api.Controllers
             _articleContrat = articleContract;
         }
 
-        [HttpGet]
+        [HttpGet("GetArticle")]
         public GetArticleResponseModel GetArticle([FromBody]GetArticleRequestModel request)
         {
             return _articleContrat.GetArticle(request);
         }
 
-        [HttpGet]
+        [HttpGet("GetAllArticle")]
         public ICollection<Article> GetAllArticle()
         {
             return _articleContrat.GetAllArticle();
         }
 
-        [HttpPost]
+        [HttpPost("AddArticle")]
         public void AddArticle([FromBody]AddArticleRequestModel request)
         {
             _articleContrat.AddArticle(request);
         }
 
-        [HttpPut]
+        [HttpPut("UpdateArticle")]
         public void UpdateArticle([FromBody]UpdateArticleRequestModel request)
         {
             _articleContrat.UpdateArticle(request);
         }
 
-        [HttpDelete]
+        [HttpDelete("DeleteArticle")]
         public void DeleteArticle([FromBody]int id)
         {
             _articleContrat.DeleteArticle(id);
