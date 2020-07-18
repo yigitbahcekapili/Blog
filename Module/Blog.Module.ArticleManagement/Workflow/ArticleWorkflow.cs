@@ -23,7 +23,7 @@ namespace Blog.Module.ArticleManagement.Workflow
             _mapper = mapper;
         }
 
-        #region Get Article
+        #region Get
 
         public GetArticleResponseModel GetArticle(GetArticleRequestModel requestModel)
         {
@@ -51,12 +51,39 @@ namespace Blog.Module.ArticleManagement.Workflow
 
         #endregion
 
+        #region Add
+
         public void AddArticle(AddArticleRequestModel requestModel)
         {
             Article article = _mapper.Map<AddArticleRequestModel, Article>(requestModel);
 
             _articleRepository.Add(article);
         }
+
+        #endregion
+
+        #region Update
+
+        public void UpdateArticle(UpdateArticleRequestModel requestModel)
+        {
+            Article article = UpdateArticleValidation(requestModel);
+
+            article = _mapper.Map(requestModel, article);
+
+            _articleRepository.Update(article);
+        }
+
+        private Article UpdateArticleValidation(UpdateArticleRequestModel requestModel)
+        {
+            Article article = _articleRepository.GetById(requestModel.ArticleId);
+
+            if (article == null)
+                throw new System.Exception("Güncellenecek makale bulunamadı..");
+
+            return article;
+        }
+
+        #endregion
 
     }
 }

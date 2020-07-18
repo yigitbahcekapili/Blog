@@ -59,7 +59,7 @@ namespace Blog.Infrastructure.Data.Implementation
 
         public void Update(T entity)
         {
-            DbContext.Entry(entity).State = EntityState.Modified;
+            DbContext.Set<T>().Update(entity);
 
             DbContext.SaveChanges();
         }

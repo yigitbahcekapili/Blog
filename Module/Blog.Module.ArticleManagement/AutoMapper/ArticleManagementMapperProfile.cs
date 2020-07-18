@@ -13,6 +13,11 @@ namespace Blog.Module.ArticleManagement.AutoMapper
                     .ForMember(x => x.CreatorDate, opt => opt.Ignore())
                     .ForMember(x => x.ModifiedUserDate, opt => opt.Ignore())
                     .ForMember(x => x.IsActive, opt => opt.Ignore());
+
+            CreateMap<UpdateArticleRequestModel, Article>()
+                    .ForMember(x => x.ArticleId, opt => opt.Ignore())
+                    .ForMember(x => x.CreatorDate, opt => opt.Ignore())
+                    .ForMember(x => x.ModifiedUserDate, opt => opt.Ignore());
         }
     }
 }

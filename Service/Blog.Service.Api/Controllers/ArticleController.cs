@@ -17,7 +17,7 @@ namespace Blog.Service.Api.Controllers
             _articleContrat = articleContract;
         }
 
-        [HttpPost("GetArticle")]
+        [HttpGet("GetArticle")]
         public GetArticleResponseModel GetArticle([FromBody]GetArticleRequestModel request)
         {
             return _articleContrat.GetArticle(request);
@@ -27,6 +27,12 @@ namespace Blog.Service.Api.Controllers
         public void AddArticle([FromBody]AddArticleRequestModel request)
         {
             _articleContrat.AddArticle(request);
+        }
+
+        [HttpPut("UpdateArticle")]
+        public void UpdateArticle([FromBody]UpdateArticleRequestModel request)
+        {
+            _articleContrat.UpdateArticle(request);
         }
 
     }

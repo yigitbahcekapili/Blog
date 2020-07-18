@@ -47,9 +47,9 @@ namespace Blog.Service.Api
 
             #region Auto Mapper
 
-            var mappingConfig = new MapperConfiguration(mc =>
+            var mappingConfig = new MapperConfiguration(config =>
             {
-                mc.AddProfile(new ArticleManagementMapperProfile());
+                config.AddProfile(new ArticleManagementMapperProfile());
             });
 
             IMapper mapper = mappingConfig.CreateMapper();
