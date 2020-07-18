@@ -4,7 +4,7 @@ namespace Blog.Infrastructure.Data.Entities
 {
     public class BlogDbContext : DbContext
     {
-        public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
+        public BlogDbContext(DbContextOptions options) : base(options)
         {
         }
 
